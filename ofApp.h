@@ -92,6 +92,10 @@ class ofApp : public ofBaseApp{
 		ofParameterGroup salaryInput1;
 		ofParameter<int> sal1;
 		ofEventListener salListener1;
+	
+		ofParameterGroup mulInput;
+		ofParameter<float> mul;
+		ofEventListener mulListener;
 
 		ofParameterGroup percentileInput;
 		ofParameter<std::string> perc;
