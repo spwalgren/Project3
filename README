@@ -1,0 +1,2 @@
+This project utilizes an open source font and salary info from the Bureau of Labor Statistics. Data is read in then depending on user input, a bar graph 
+is printed to the screen showing the information presented in a visual format.
