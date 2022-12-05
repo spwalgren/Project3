@@ -24,7 +24,7 @@ void ofApp::setup(){
 	sortString = "";
 	minChange = false;
 	maxChange = false;
-
+	multiplier = 0;
 
 	myFont.load("Swansea-q3pd.ttf", 12);
 	titleFont.load("Swansea-q3pd.ttf", 30);
@@ -51,12 +51,21 @@ void ofApp::setup(){
 	percentileInput.add(perc.set("", ""));
 	gui.add(percentileInput);
 
+	mul.addListener(this, &ofApp::onMulChange);
+	mulInput.setName("Multiplier");
+	mulInput.add(mul.set("Mul", 600.0, 100.0, 5000.0));
+	gui.add(mulInput);
+
 	bellX = (950 + 500) / 2 - 50;
 	menuY = 600;
 	menuX = 350;
 	bellMin = 500;
 
 	title = "";
+}
+
+void ofApp::onMulChange(float& num) {
+	multiplier = num;
 }
 
 void ofApp::onTextChange(std::string& text) {
@@ -177,11 +186,6 @@ void ofApp::PercChange(std::string& str) {
 }
 
 //--------------------------------------------------------------
-void ofApp::update(){
-
-}
-
-//--------------------------------------------------------------
 void ofApp::draw(){
 	ofBackground(255, 255, 255);
 	DrawMenu();
@@ -204,58 +208,8 @@ void ofApp::draw(){
 }
 
 //--------------------------------------------------------------
-void ofApp::keyPressed(int key){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::keyReleased(int key){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseMoved(int x, int y ){
-
-}
-
-//--------------------------------------------------------------
 void ofApp::mouseDragged(int x, int y, int button){
 	menuY += ofGetPreviousMouseY() - y;
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mousePressed(int x, int y, int button){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseReleased(int x, int y, int button){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseEntered(int x, int y){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseExited(int x, int y){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::windowResized(int w, int h){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::gotMessage(ofMessage msg){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::dragEvent(ofDragInfo dragInfo){ 
 
 }
 
@@ -263,7 +217,6 @@ void ofApp::DrawBellCurve(std::vector<Job> curve) {
 	ofSetLineWidth(2);
 	if (curve.size() == 0)
 		return;
-
 
 	std::string quickString = "Quick Sort Time Elapsed: " + std::to_string(quickSortTime) + " microseconds";
 	std::string shellString = "Shell Sort Time Elapsed: " + std::to_string(shellSortTime) + " microseconds";
@@ -335,7 +288,7 @@ void ofApp::DrawBellCurve(std::vector<Job> curve) {
 	// normalizes the data so it doesn't get off the screen
 	for (int i = 0; i < count.size(); i++) {
 		count.at(i) /= curve.size();
-		count.at(i) *= 600.0;
+		count.at(i) *= multiplier;
 	}
 	
 	// draw the graph
